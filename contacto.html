@@ -32,6 +32,14 @@
 .cita-note{font-size:13px;color:#6b7a70;margin:14px 0 0}
 .cita-msg{display:none;margin-top:14px;padding:12px 14px;border-radius:12px;background:#eaf3ec;color:#2F5138;font-size:14px}
 .cita-msg.show{display:block}
+.cita-err{display:none;font-size:13px;color:#b3261e;margin:0}
+.cita-field.invalid .cita-err{display:block}
+.cita-field.invalid input,.cita-field.invalid select,.cita-field.invalid textarea{border-color:#b3261e}
+.cita-field .req{color:#b3261e;font-weight:700}
+.cita-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.cita-msg.error{background:#fdecea;color:#b3261e}
+.cita-msg a{color:inherit;font-weight:600}
+.cita-count{font-size:12px;color:#6b7a70;text-align:right}
 @media(max-width:860px){.cita-grid{grid-template-columns:1fr;gap:24px}.cita-row{grid-template-columns:1fr;gap:0}.cita-form{padding:20px}}
 </style>
 </head>
@@ -115,22 +123,25 @@
         <form class="cita-form reveal" id="form-cita" novalidate>
           <div class="cita-row">
             <div class="cita-field">
-              <label for="c-nombre">Nombre completo</label>
-              <input id="c-nombre" name="nombre" type="text" autocomplete="name" required maxlength="80" placeholder="Tu nombre">
+              <label for="c-nombre">Nombre completo <span class="req" aria-hidden="true">*</span></label>
+              <input id="c-nombre" name="nombre" type="text" autocomplete="name" required minlength="3" maxlength="80" placeholder="Nombre y apellido" aria-describedby="err-nombre">
+              <p class="cita-err" id="err-nombre" role="alert"></p>
             </div>
             <div class="cita-field">
-              <label for="c-tel">Teléfono</label>
-              <input id="c-tel" name="telefono" type="tel" autocomplete="tel" required inputmode="tel" maxlength="20" placeholder="7000-0000">
+              <label for="c-tel">Teléfono <span class="req" aria-hidden="true">*</span></label>
+              <input id="c-tel" name="telefono" type="tel" autocomplete="tel" required inputmode="tel" maxlength="20" placeholder="7647-9750" aria-describedby="err-telefono">
+              <p class="cita-err" id="err-telefono" role="alert"></p>
             </div>
           </div>
           <div class="cita-field">
             <label for="c-correo">Correo <small>(opcional)</small></label>
-            <input id="c-correo" name="correo" type="email" autocomplete="email" maxlength="100" placeholder="tucorreo@ejemplo.com">
+            <input id="c-correo" name="correo" type="email" autocomplete="email" maxlength="100" placeholder="tucorreo@ejemplo.com" aria-describedby="err-correo">
+              <p class="cita-err" id="err-correo" role="alert"></p>
           </div>
           <div class="cita-row">
             <div class="cita-field">
-              <label for="c-servicio">Servicio de interés</label>
-              <select id="c-servicio" name="servicio" required>
+              <label for="c-servicio">Servicio de interés <span class="req" aria-hidden="true">*</span></label>
+              <select id="c-servicio" name="servicio" required aria-describedby="err-servicio">
                 <option value="">Selecciona una opción</option>
                 <option>Limpieza dental</option>
                 <option>Blanqueamiento dental</option>
@@ -140,25 +151,32 @@
                 <option>Odontopediatría</option>
                 <option>Consulta / valoración</option>
               </select>
+              <p class="cita-err" id="err-servicio" role="alert"></p>
             </div>
             <div class="cita-field">
               <label for="c-fecha">Fecha preferida <small>(opcional)</small></label>
-              <input id="c-fecha" name="fecha" type="date">
+              <input id="c-fecha" name="fecha" type="date" aria-describedby="err-fecha">
+              <p class="cita-err" id="err-fecha" role="alert"></p>
             </div>
           </div>
           <div class="cita-field">
             <label for="c-horario">Horario preferido <small>(opcional)</small></label>
-            <select id="c-horario" name="horario">
+            <select id="c-horario" name="horario" aria-describedby="err-horario">
               <option value="">Sin preferencia</option>
               <option>Mañana (8:00am–12:00pm)</option>
               <option>Tarde (12:00pm–6:00pm)</option>
               <option>Sábado en la mañana</option>
             </select>
+              <p class="cita-err" id="err-horario" role="alert"></p>
           </div>
           <div class="cita-field">
             <label for="c-msg">Comentario <small>(opcional)</small></label>
-            <textarea id="c-msg" name="mensaje" maxlength="300" placeholder="Cuéntanos brevemente qué necesitas"></textarea>
+            <textarea id="c-msg" name="mensaje" maxlength="300" placeholder="Cuéntanos brevemente qué necesitas" aria-describedby="err-mensaje"></textarea>
+            <span class="cita-count" id="count-msg" aria-hidden="true">0/300</span>
+              <p class="cita-err" id="err-mensaje" role="alert"></p>
           </div>
+          <div class="cita-hp" aria-hidden="true"><label>No llenar este campo<input type="text" name="web" tabindex="-1" autocomplete="off"></label></div>
+          <p class="cita-note" style="margin:0 0 14px"><span class="req" style="color:#b3261e">*</span> Campos obligatorios</p>
           <div class="cita-actions">
             <button class="btn btn-primary" type="submit" id="cita-wa">Enviar por WhatsApp</button>
             <button class="btn btn-ghost" type="button" id="cita-mail">Enviar por correo</button>
@@ -186,6 +204,28 @@
   </div>
 </section>
 
+  <section class="section" id="sistema">
+    <div class="wrap">
+      <div class="sys reveal">
+        <div>
+          <p class="eyebrow">Para clínicas y profesionales</p>
+          <h2>¿Te interesa nuestro sistema de gestión?</h2>
+          <p>Dental Fresh se apoya en un sistema de escritorio propio para organizar su trabajo diario. Si tienes una clínica y quieres conocerlo, escríbenos y te damos información.</p>
+          <ul>
+            <li>Citas organizadas por día y horario</li>
+            <li>Pacientes y tratamientos en un solo lugar</li>
+            <li>Acceso con usuario y contraseña</li>
+          </ul>
+        </div>
+        <div class="btn-col">
+          <a class="btn btn-primary" href="mailto:dentalfreshin@gmail.com?subject=Informaci%C3%B3n%20sobre%20el%20sistema%20de%20gesti%C3%B3n&amp;body=Hola%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20el%20sistema%20de%20gesti%C3%B3n%20de%20Dental%20Fresh.">Pedir información por correo</a>
+          <a class="btn btn-ghost" href="https://wa.me/50376479750?text=Hola%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20el%20sistema%20de%20gesti%C3%B3n%20de%20Dental%20Fresh." target="_blank" rel="noopener">Pedir información por WhatsApp</a>
+          <small>Se abre tu correo o WhatsApp con el mensaje ya escrito.</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section alt">
     <div class="wrap">
       <div class="section-head center reveal">
@@ -197,6 +237,7 @@
         <details><summary>¿Cuánto cuesta cada tratamiento?</summary><p>En la página de <a href="servicios.html">Servicios</a> están los precios de referencia. El costo final se confirma después de tu valoración.</p></details>
         <details><summary>¿Atienden a niños?</summary><p>Sí, contamos con odontopediatría, con atención especializada y a gusto para los más pequeños.</p></details>
         <details><summary>¿Ofrecen planes de pago?</summary><p>Sí, la ortodoncia cuenta con planes de pago. Consulta las condiciones por teléfono o WhatsApp.</p></details>
+        <details><summary>¿Qué es el sistema de gestión?</summary><p>Es el sistema de escritorio propio de la clínica para organizar citas, pacientes y tratamientos. Si tienes una clínica y te interesa, puedes <a href="#sistema">pedir información aquí</a>.</p></details>
       </div>
     </div>
   </section>
@@ -215,6 +256,7 @@
           <li><a href="servicios.html">Servicios y precios</a></li>
           <li><a href="nosotros.html">Nosotros</a></li>
           <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="#sistema">Información del sistema</a></li>
         </ul>
       </div>
       <div>
@@ -246,41 +288,130 @@
 <script>
 (function(){
   var f=document.getElementById('form-cita'); if(!f) return;
+  var WA='50376479750', MAIL='dentalfreshin@gmail.com';
+  var HORARIOS_SAB_ERR='Los sábados atendemos solo de 8:00am a 12:00pm.';
   var msg=document.getElementById('cita-msg');
-  var fecha=document.getElementById('c-fecha');
+  var fecha=f.elements.fecha, area=f.elements.mensaje, cnt=document.getElementById('count-msg');
   var hoy=new Date(); hoy.setMinutes(hoy.getMinutes()-hoy.getTimezoneOffset());
   fecha.min=hoy.toISOString().slice(0,10);
+  var max=new Date(hoy); max.setMonth(max.getMonth()+6); fecha.max=max.toISOString().slice(0,10);
 
-  function texto(){
-    var v=function(n){return (f.elements[n].value||'').trim();};
-    var l=['Hola, quiero agendar una cita en Dental Fresh.','',
-      'Nombre: '+v('nombre'),'Teléfono: '+v('telefono')];
-    if(v('correo')) l.push('Correo: '+v('correo'));
-    l.push('Servicio: '+v('servicio'));
-    if(v('fecha')) l.push('Fecha preferida: '+v('fecha'));
-    if(v('horario')) l.push('Horario preferido: '+v('horario'));
-    if(v('mensaje')) l.push('Comentario: '+v('mensaje'));
-    return l.join('\n');
-  }
-  function aviso(t){msg.textContent=t;msg.classList.add('show');}
-  function valido(){
-    if(!f.reportValidity()) return false;
-    var tel=f.elements.telefono.value.replace(/\D/g,'');
-    if(tel.length<8){f.elements.telefono.setCustomValidity('Escribe un teléfono válido');f.elements.telefono.reportValidity();return false;}
-    return true;
-  }
-  f.elements.telefono.addEventListener('input',function(){this.setCustomValidity('');});
+  var DIAS=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  var MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var v=function(n){return (f.elements[n].value||'').replace(/[ \t]+/g,' ').trim();};
 
-  f.addEventListener('submit',function(e){
-    e.preventDefault(); if(!valido()) return;
-    window.open('https://wa.me/50376479750?text='+encodeURIComponent(texto()),'_blank','noopener');
-    aviso('Se abrió WhatsApp con tu mensaje. Solo falta que lo envíes.');
+  /* ---------- Validación (misma lógica que el servidor) ---------- */
+  function validar(){
+    var e={}, nombre=v('nombre');
+    if(!nombre) e.nombre='Escribe tu nombre completo.';
+    else if(nombre.length<3) e.nombre='El nombre debe tener al menos 3 caracteres.';
+    else if(!/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ '.\-]*$/.test(nombre)) e.nombre='El nombre solo puede llevar letras y espacios.';
+    else if(nombre.indexOf(' ')<0) e.nombre='Escribe tu nombre y apellido.';
+
+    var crudo=v('telefono'), d=crudo.replace(/\D/g,'');
+    if(d.length===11&&d.indexOf('503')===0) d=d.slice(3);
+    if(!crudo) e.telefono='Escribe tu número de teléfono.';
+    else if(/[^\d\s\-+()]/.test(crudo)) e.telefono='El teléfono solo puede llevar números.';
+    else if(d.length!==8||'267'.indexOf(d[0])<0) e.telefono='Escribe un teléfono de 8 dígitos, por ejemplo 7647-9750.';
+    else if(/^(\d)\1+$/.test(d)) e.telefono='Revisa el número, parece incorrecto.';
+
+    var c=v('correo');
+    if(c&&!/^[A-Za-z0-9._%+\-]+@[A-Za-z0-9\-]+(\.[A-Za-z0-9\-]+)*\.[A-Za-z]{2,}$/.test(c)) e.correo='Escribe un correo válido, por ejemplo nombre@correo.com.';
+
+    if(!v('servicio')) e.servicio='Selecciona un servicio.';
+
+    var fx=v('fecha'), dia=null;
+    if(fx){
+      var p=fx.split('-'), dt=new Date(+p[0],+p[1]-1,+p[2]); dia=dt.getDay();
+      if(fx<fecha.min) e.fecha='La fecha no puede ser anterior a hoy.';
+      else if(fx>fecha.max) e.fecha='Elige una fecha dentro de los próximos 6 meses.';
+      else if(dia===0) e.fecha='Los domingos no atendemos. Elige de lunes a sábado.';
+    }
+    var h=v('horario');
+    if(h&&fx&&!e.fecha){
+      if(dia===6&&h.indexOf('Tarde')===0) e.horario=HORARIOS_SAB_ERR;
+      else if(dia>=1&&dia<=5&&h==='Sábado en la mañana') e.horario='Ese horario es solo para sábados. Cambia la fecha o el horario.';
+    }
+    if(v('mensaje').length>300) e.mensaje='El comentario no puede pasar de 300 caracteres.';
+    return e;
+  }
+  function pintar(e){
+    var primero=null;
+    ['nombre','telefono','correo','servicio','fecha','horario','mensaje'].forEach(function(n){
+      var el=f.elements[n], box=el.closest('.cita-field'), p=document.getElementById('err-'+n);
+      if(e[n]){ if(p) p.textContent=e[n]; box.classList.add('invalid'); el.setAttribute('aria-invalid','true'); if(!primero) primero=el; }
+      else { if(p) p.textContent=''; box.classList.remove('invalid'); el.removeAttribute('aria-invalid'); }
+    });
+    if(primero) primero.focus();
+  }
+  /* limpia el error de un campo en cuanto se corrige */
+  Array.prototype.forEach.call(f.elements,function(el){
+    if(!el.name||el.name==='web') return;
+    var ev=(el.tagName==='SELECT'||el.type==='date')?'change':'input';
+    el.addEventListener(ev,function(){
+      var box=el.closest('.cita-field'); if(box&&box.classList.contains('invalid')){ var e=validar(); if(!e[el.name]){ pintar2(el.name); } }
+    });
   });
-  document.getElementById('cita-mail').addEventListener('click',function(){
-    if(!valido()) return;
-    window.location.href='mailto:dentalfreshin@gmail.com?subject='+encodeURIComponent('Solicitud de cita')+'&body='+encodeURIComponent(texto());
-    aviso('Se abrió tu correo con el mensaje. Solo falta que lo envíes.');
+  function pintar2(n){ var el=f.elements[n], box=el.closest('.cita-field'), p=document.getElementById('err-'+n); box.classList.remove('invalid'); el.removeAttribute('aria-invalid'); if(p) p.textContent=''; }
+  /* el teléfono se da formato mientras se escribe: 7647-9750 */
+  f.elements.telefono.addEventListener('blur',function(){
+    var d=this.value.replace(/\D/g,''); if(d.length===11&&d.indexOf('503')===0) d=d.slice(3);
+    if(d.length===8) this.value=d.slice(0,4)+'-'+d.slice(4);
   });
+  area.addEventListener('input',function(){cnt.textContent=area.value.length+'/300';});
+
+  /* ---------- Mensaje ordenado (respaldo si el servidor no responde) ---------- */
+  function fechaLarga(iso){var p=iso.split('-'),d=new Date(+p[0],+p[1]-1,+p[2]);var s=DIAS[d.getDay()];return s.charAt(0).toUpperCase()+s.slice(1)+' '+d.getDate()+' de '+MESES[d.getMonth()]+' de '+d.getFullYear();}
+  function textoLocal(folio){
+    var l='━━━━━━━━━━━━━━━';
+    var a=['Hola, quiero agendar una cita en Dental Fresh.','','🦷 *SOLICITUD DE CITA*',l,'*Folio:* #'+String(folio).padStart(4,'0'),'*Nombre:* '+v('nombre'),'*Teléfono:* '+v('telefono')];
+    if(v('correo')) a.push('*Correo:* '+v('correo'));
+    a.push('*Servicio:* '+v('servicio'));
+    if(v('fecha')) a.push('*Fecha preferida:* '+fechaLarga(v('fecha')));
+    if(v('horario')) a.push('*Horario:* '+v('horario'));
+    if(v('mensaje')) a.push('*Comentario:* '+v('mensaje'));
+    a.push(l,'_Dental Fresh · Una sonrisa fresca, todos los días._');
+    return a.join('\n');
+  }
+
+  function aviso(html,error){ msg.innerHTML=html; msg.classList.toggle('error',!!error); msg.classList.add('show'); }
+  function abrirWA(url){
+    var w=window.open(url,'_blank','noopener');
+    if(!w) aviso('Tu navegador bloqueó la ventana. <a href="'+url+'" target="_blank" rel="noopener">Toca aquí para abrir WhatsApp</a>.');
+  }
+
+  /* ---------- Base de datos de la página (localStorage del navegador) ---------- */
+  var KEY='dentalfresh_citas';
+  function leerCitas(){ try{ return JSON.parse(localStorage.getItem(KEY))||[]; }catch(e){ return []; } }
+  function guardarCita(){
+    var lista=leerCitas(), ahora=Date.now(), tel=v('telefono'), srv=v('servicio');
+    var dup=lista.filter(function(c){return c.telefono===tel&&c.servicio===srv&&c.estado==='pendiente'&&ahora-c.ts<600000;})[0];
+    if(dup) return {id:dup.id,guardada:true};
+    var id=lista.reduce(function(m,c){return Math.max(m,c.id);},0)+1;
+    lista.push({id:id,nombre:v('nombre'),telefono:tel,correo:v('correo')||null,servicio:srv,
+      fecha:v('fecha')||null,horario:v('horario')||null,mensaje:v('mensaje')||null,
+      estado:'pendiente',creado:new Date().toLocaleString('es-SV'),ts:ahora});
+    try{ localStorage.setItem(KEY,JSON.stringify(lista)); return {id:id,guardada:true}; }
+    catch(e){ return {id:id,guardada:false}; }   /* almacenamiento bloqueado: igual se envía */
+  }
+
+  /* ---------- Envío: valida → guarda → abre WhatsApp/correo ---------- */
+  function enviar(canal){
+    if(f.elements.web&&f.elements.web.value) return;          /* antispam */
+    var e=validar(); pintar(e); if(Object.keys(e).length){ aviso('Revisa los campos marcados en rojo.',true); return; }
+    var r=guardarCita(), texto=textoLocal(r.id);
+    var nota=(r.guardada?'Solicitud guardada.':'')+' Tu folio es #'+String(r.id).padStart(4,'0')+'.';
+    if(canal==='wa'){
+      abrirWA('https://wa.me/'+WA+'?text='+encodeURIComponent(texto));
+      if(!msg.querySelector('a')) aviso(nota+' Se abrió WhatsApp con tu mensaje. Solo falta que lo envíes.');
+    }else{
+      aviso(nota+' Se abrió tu correo con el mensaje. Solo falta que lo envíes.');
+      window.location.href='mailto:'+MAIL+'?subject='+encodeURIComponent('Solicitud de cita #'+String(r.id).padStart(4,'0'))+'&body='+encodeURIComponent(texto);
+    }
+    f.reset(); cnt.textContent='0/300';
+  }
+  f.addEventListener('submit',function(ev){ev.preventDefault(); enviar('wa');});
+  document.getElementById('cita-mail').addEventListener('click',function(){enviar('mail');});
 })();
 </script>
 </body>
