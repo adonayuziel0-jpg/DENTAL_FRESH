@@ -113,9 +113,9 @@
         <div class="cita-info reveal">
           <p class="eyebrow">Agenda tu cita</p>
           <h2>Déjanos tus datos y te contactamos</h2>
-          <p>Completa el formulario con tu información básica. Nuestro equipo revisa la agenda y te confirma el día y la hora.</p>
+          <p>Completa el formulario con tus datos de paciente. Nuestro equipo revisa la agenda y te confirma el día y la hora.</p>
           <ul>
-            <li>Solo pedimos lo necesario para contactarte</li>
+            <li>Tus datos se usan solo para gestionar tu cita</li>
             <li>Te respondemos en nuestro horario de atención</li>
             <li>El costo final se confirma en tu valoración</li>
           </ul>
@@ -123,9 +123,21 @@
         <form class="cita-form reveal" id="form-cita" novalidate>
           <div class="cita-row">
             <div class="cita-field">
-              <label for="c-nombre">Nombre completo <span class="req" aria-hidden="true">*</span></label>
-              <input id="c-nombre" name="nombre" type="text" autocomplete="name" required minlength="3" maxlength="80" placeholder="Nombre y apellido" aria-describedby="err-nombre">
+              <label for="c-nombre">Nombre <span class="req" aria-hidden="true">*</span></label>
+              <input id="c-nombre" name="nombre" type="text" autocomplete="given-name" required minlength="2" maxlength="40" placeholder="Tu nombre" aria-describedby="err-nombre">
               <p class="cita-err" id="err-nombre" role="alert"></p>
+            </div>
+            <div class="cita-field">
+              <label for="c-apellido">Apellido <span class="req" aria-hidden="true">*</span></label>
+              <input id="c-apellido" name="apellido" type="text" autocomplete="family-name" required minlength="2" maxlength="40" placeholder="Tu apellido" aria-describedby="err-apellido">
+              <p class="cita-err" id="err-apellido" role="alert"></p>
+            </div>
+          </div>
+          <div class="cita-row">
+            <div class="cita-field">
+              <label for="c-nac">Fecha de nacimiento <span class="req" aria-hidden="true">*</span></label>
+              <input id="c-nac" name="nacimiento" type="date" autocomplete="bday" required aria-describedby="err-nacimiento">
+              <p class="cita-err" id="err-nacimiento" role="alert"></p>
             </div>
             <div class="cita-field">
               <label for="c-tel">Teléfono <span class="req" aria-hidden="true">*</span></label>
@@ -134,10 +146,20 @@
             </div>
           </div>
           <div class="cita-field">
-            <label for="c-correo">Correo</label>
-            <input id="c-correo" name="correo" type="email" autocomplete="email" maxlength="100" placeholder="tucorreo@ejemplo.com" aria-describedby="err-correo">
+              <label for="c-correo">Correo electrónico <span class="req" aria-hidden="true">*</span></label>
+              <input id="c-correo" name="correo" type="email" autocomplete="email" required maxlength="100" placeholder="tucorreo@ejemplo.com" aria-describedby="err-correo">
               <p class="cita-err" id="err-correo" role="alert"></p>
-          </div>
+            </div>
+          <div class="cita-field">
+              <label for="c-dir">Dirección <span class="req" aria-hidden="true">*</span></label>
+              <input id="c-dir" name="direccion" type="text" autocomplete="street-address" required minlength="5" maxlength="150" placeholder="Colonia, calle y municipio" aria-describedby="err-direccion">
+              <p class="cita-err" id="err-direccion" role="alert"></p>
+            </div>
+          <div class="cita-field">
+              <label for="c-alergias">Alergias <span class="req" aria-hidden="true">*</span></label>
+              <input id="c-alergias" name="alergias" type="text" required maxlength="200" placeholder="Si no tienes, escribe: Ninguna" aria-describedby="err-alergias">
+              <p class="cita-err" id="err-alergias" role="alert"></p>
+            </div>
           <div class="cita-row">
             <div class="cita-field">
               <label for="c-servicio">Servicio de interés <span class="req" aria-hidden="true">*</span></label>
@@ -155,25 +177,25 @@
             </div>
             <div class="cita-field">
               <label for="c-fecha">Fecha preferida <small>(opcional)</small></label>
-              <input id="c-fecha" name="fecha" type="date" aria-describedby="err-fecha">
+              <input id="c-fecha" name="fecha" type="date"  aria-describedby="err-fecha">
               <p class="cita-err" id="err-fecha" role="alert"></p>
             </div>
           </div>
           <div class="cita-field">
-            <label for="c-horario">Horario preferido <small>(opcional)</small></label>
-            <select id="c-horario" name="horario" aria-describedby="err-horario">
-              <option value="">Sin preferencia</option>
-              <option>Mañana (8:00am–12:00pm)</option>
-              <option>Tarde (12:00pm–6:00pm)</option>
-              <option>Sábado en la mañana</option>
-            </select>
+              <label for="c-horario">Horario preferido <small>(opcional)</small></label>
+              <select id="c-horario" name="horario" aria-describedby="err-horario">
+                <option value="">Sin preferencia</option>
+                <option>Mañana (8:00am–12:00pm)</option>
+                <option>Tarde (12:00pm–6:00pm)</option>
+                <option>Sábado en la mañana</option>
+              </select>
               <p class="cita-err" id="err-horario" role="alert"></p>
-          </div>
+            </div>
           <div class="cita-field">
             <label for="c-msg">Comentario <small>(opcional)</small></label>
             <textarea id="c-msg" name="mensaje" maxlength="300" placeholder="Cuéntanos brevemente qué necesitas" aria-describedby="err-mensaje"></textarea>
             <span class="cita-count" id="count-msg" aria-hidden="true">0/300</span>
-              <p class="cita-err" id="err-mensaje" role="alert"></p>
+            <p class="cita-err" id="err-mensaje" role="alert"></p>
           </div>
           <div class="cita-hp" aria-hidden="true"><label>No llenar este campo<input type="text" name="web" tabindex="-1" autocomplete="off"></label></div>
           <p class="cita-note" style="margin:0 0 14px"><span class="req" style="color:#b3261e">*</span> Campos obligatorios</p>
@@ -265,24 +287,38 @@
 (function(){
   var f=document.getElementById('form-cita'); if(!f) return;
   var WA='50376479750', MAIL='dentalfreshin@gmail.com';
-  var HORARIOS_SAB_ERR='Los sábados atendemos solo de 8:00am a 12:00pm.';
+  var CAMPOS=['nombre','apellido','nacimiento','telefono','correo','direccion','alergias','servicio','fecha','horario','mensaje'];
   var msg=document.getElementById('cita-msg');
-  var fecha=f.elements.fecha, area=f.elements.mensaje, cnt=document.getElementById('count-msg');
+  var fecha=f.elements.fecha, nac=f.elements.nacimiento, area=f.elements.mensaje, cnt=document.getElementById('count-msg');
   var hoy=new Date(); hoy.setMinutes(hoy.getMinutes()-hoy.getTimezoneOffset());
-  fecha.min=hoy.toISOString().slice(0,10);
+  var hoyISO=hoy.toISOString().slice(0,10);
+  fecha.min=hoyISO;
   var max=new Date(hoy); max.setMonth(max.getMonth()+6); fecha.max=max.toISOString().slice(0,10);
+  nac.max=hoyISO; nac.min='1900-01-01';
 
   var DIAS=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
   var MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var LETRAS=/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ '.\-]*$/;
   var v=function(n){return (f.elements[n].value||'').replace(/[ \t]+/g,' ').trim();};
 
-  /* ---------- Validación (misma lógica que el servidor) ---------- */
+  /* ---------- Validación ---------- */
+  function validarNombre(n,etq){
+    var t=v(n);
+    if(!t) return 'Escribe '+etq+'.';
+    if(t.length<2) return 'Debe tener al menos 2 letras.';
+    if(t.length>40) return 'No puede pasar de 40 caracteres.';
+    if(!LETRAS.test(t)) return 'Solo puede llevar letras y espacios.';
+    return '';
+  }
   function validar(){
-    var e={}, nombre=v('nombre');
-    if(!nombre) e.nombre='Escribe tu nombre completo.';
-    else if(nombre.length<3) e.nombre='El nombre debe tener al menos 3 caracteres.';
-    else if(!/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ '.\-]*$/.test(nombre)) e.nombre='El nombre solo puede llevar letras y espacios.';
-    else if(nombre.indexOf(' ')<0) e.nombre='Escribe tu nombre y apellido.';
+    var e={}, x;
+    if((x=validarNombre('nombre','tu nombre'))) e.nombre=x;
+    if((x=validarNombre('apellido','tu apellido'))) e.apellido=x;
+
+    var nv=v('nacimiento');
+    if(!nv) e.nacimiento='Escribe tu fecha de nacimiento.';
+    else if(nv>hoyISO) e.nacimiento='La fecha de nacimiento no puede ser futura.';
+    else if(nv<'1900-01-01') e.nacimiento='Revisa la fecha de nacimiento.';
 
     var crudo=v('telefono'), d=crudo.replace(/\D/g,'');
     if(d.length===11&&d.indexOf('503')===0) d=d.slice(3);
@@ -292,7 +328,18 @@
     else if(/^(\d)\1+$/.test(d)) e.telefono='Revisa el número, parece incorrecto.';
 
     var c=v('correo');
-    if(c&&!/^[A-Za-z0-9._%+\-]+@[A-Za-z0-9\-]+(\.[A-Za-z0-9\-]+)*\.[A-Za-z]{2,}$/.test(c)) e.correo='Escribe un correo válido, por ejemplo nombre@correo.com.';
+    if(!c) e.correo='Escribe tu correo electrónico.';
+    else if(!/^[A-Za-z0-9._%+\-]+@[A-Za-z0-9\-]+(\.[A-Za-z0-9\-]+)*\.[A-Za-z]{2,}$/.test(c)) e.correo='Escribe un correo válido, por ejemplo nombre@correo.com.';
+
+    var dir=v('direccion');
+    if(!dir) e.direccion='Escribe tu dirección.';
+    else if(dir.length<5) e.direccion='La dirección debe tener al menos 5 caracteres.';
+    else if(dir.length>150) e.direccion='La dirección no puede pasar de 150 caracteres.';
+
+    var al=v('alergias');
+    if(!al) e.alergias='Escribe tus alergias. Si no tienes, escribe "Ninguna".';
+    else if(al.length<2) e.alergias='Escribe al menos 2 caracteres, o "Ninguna".';
+    else if(al.length>200) e.alergias='Las alergias no pueden pasar de 200 caracteres.';
 
     if(!v('servicio')) e.servicio='Selecciona un servicio.';
 
@@ -305,44 +352,56 @@
     }
     var h=v('horario');
     if(h&&fx&&!e.fecha){
-      if(dia===6&&h.indexOf('Tarde')===0) e.horario=HORARIOS_SAB_ERR;
+      if(dia===6&&h.indexOf('Tarde')===0) e.horario='Los sábados atendemos solo de 8:00am a 12:00pm.';
       else if(dia>=1&&dia<=5&&h==='Sábado en la mañana') e.horario='Ese horario es solo para sábados. Cambia la fecha o el horario.';
     }
     if(v('mensaje').length>300) e.mensaje='El comentario no puede pasar de 300 caracteres.';
     return e;
   }
+  function limpiarError(n){ var el=f.elements[n], box=el.closest('.cita-field'), p=document.getElementById('err-'+n); box.classList.remove('invalid'); el.removeAttribute('aria-invalid'); if(p) p.textContent=''; }
   function pintar(e){
     var primero=null;
-    ['nombre','telefono','correo','servicio','fecha','horario','mensaje'].forEach(function(n){
+    CAMPOS.forEach(function(n){
       var el=f.elements[n], box=el.closest('.cita-field'), p=document.getElementById('err-'+n);
       if(e[n]){ if(p) p.textContent=e[n]; box.classList.add('invalid'); el.setAttribute('aria-invalid','true'); if(!primero) primero=el; }
-      else { if(p) p.textContent=''; box.classList.remove('invalid'); el.removeAttribute('aria-invalid'); }
+      else limpiarError(n);
     });
     if(primero) primero.focus();
   }
-  /* limpia el error de un campo en cuanto se corrige */
-  Array.prototype.forEach.call(f.elements,function(el){
-    if(!el.name||el.name==='web') return;
-    var ev=(el.tagName==='SELECT'||el.type==='date')?'change':'input';
+  /* quita el error de un campo en cuanto se corrige */
+  CAMPOS.forEach(function(n){
+    var el=f.elements[n], ev=(el.tagName==='SELECT'||el.type==='date')?'change':'input';
     el.addEventListener(ev,function(){
-      var box=el.closest('.cita-field'); if(box&&box.classList.contains('invalid')){ var e=validar(); if(!e[el.name]){ pintar2(el.name); } }
+      if(el.closest('.cita-field').classList.contains('invalid')&&!validar()[n]) limpiarError(n);
     });
   });
-  function pintar2(n){ var el=f.elements[n], box=el.closest('.cita-field'), p=document.getElementById('err-'+n); box.classList.remove('invalid'); el.removeAttribute('aria-invalid'); if(p) p.textContent=''; }
-  /* el teléfono se da formato mientras se escribe: 7647-9750 */
+  /* el teléfono se ordena al salir del campo: 7647-9750 */
   f.elements.telefono.addEventListener('blur',function(){
     var d=this.value.replace(/\D/g,''); if(d.length===11&&d.indexOf('503')===0) d=d.slice(3);
     if(d.length===8) this.value=d.slice(0,4)+'-'+d.slice(4);
   });
   area.addEventListener('input',function(){cnt.textContent=area.value.length+'/300';});
 
-  /* ---------- Mensaje ordenado (respaldo si el servidor no responde) ---------- */
-  function fechaLarga(iso){var p=iso.split('-'),d=new Date(+p[0],+p[1]-1,+p[2]);var s=DIAS[d.getDay()];return s.charAt(0).toUpperCase()+s.slice(1)+' '+d.getDate()+' de '+MESES[d.getMonth()]+' de '+d.getFullYear();}
-  function textoLocal(folio){
-    var l='━━━━━━━━━━━━━━━';
-    var a=['Hola, quiero agendar una cita en Dental Fresh.','','🦷 *SOLICITUD DE CITA*',l,'*Folio:* #'+String(folio).padStart(4,'0'),'*Nombre:* '+v('nombre'),'*Teléfono:* '+v('telefono')];
-    if(v('correo')) a.push('*Correo:* '+v('correo'));
-    a.push('*Servicio:* '+v('servicio'));
+  /* ---------- Mensaje de WhatsApp ordenado ---------- */
+  function iso(i){var p=i.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
+  function fechaCorta(i){var d=iso(i);return d.getDate()+' de '+MESES[d.getMonth()]+' de '+d.getFullYear();}
+  function fechaLarga(i){var d=iso(i),s=DIAS[d.getDay()];return s.charAt(0).toUpperCase()+s.slice(1)+' '+fechaCorta(i);}
+  function edad(i){var n=iso(i),a=hoy.getUTCFullYear()-n.getFullYear(),m=hoy.getUTCMonth()-n.getMonth();if(m<0||(m===0&&hoy.getUTCDate()<n.getDate()))a--;return a;}
+  function mayus(t){return t.replace(/(^|\s)(\S)/g,function(_,a,b){return a+b.toUpperCase();});}
+  function nombreCompleto(){var n=v('nombre')+' '+v('apellido');return (n===n.toLowerCase()||n===n.toUpperCase())?mayus(n.toLowerCase()):n;}
+  function texto(folio){
+    var l='━━━━━━━━━━━━━━━', a=[
+      'Hola, quiero agendar una cita en Dental Fresh.','',
+      '🦷 *SOLICITUD DE CITA*','*Folio:* #'+String(folio).padStart(4,'0'),l,
+      '👤 *DATOS DEL PACIENTE*',
+      '*Nombre:* '+nombreCompleto(),
+      '*Fecha de nacimiento:* '+fechaCorta(v('nacimiento'))+' ('+edad(v('nacimiento'))+' años)',
+      '*Teléfono:* '+v('telefono'),
+      '*Correo:* '+v('correo').toLowerCase(),
+      '*Dirección:* '+v('direccion'),
+      '*Alergias:* '+v('alergias'),l,
+      '📅 *DATOS DE LA CITA*',
+      '*Servicio:* '+v('servicio')];
     if(v('fecha')) a.push('*Fecha preferida:* '+fechaLarga(v('fecha')));
     if(v('horario')) a.push('*Horario:* '+v('horario'));
     if(v('mensaje')) a.push('*Comentario:* '+v('mensaje'));
@@ -364,25 +423,26 @@
     var dup=lista.filter(function(c){return c.telefono===tel&&c.servicio===srv&&c.estado==='pendiente'&&ahora-c.ts<600000;})[0];
     if(dup) return {id:dup.id,guardada:true};
     var id=lista.reduce(function(m,c){return Math.max(m,c.id);},0)+1;
-    lista.push({id:id,nombre:v('nombre'),telefono:tel,correo:v('correo')||null,servicio:srv,
+    lista.push({id:id,nombre:v('nombre'),apellido:v('apellido'),nacimiento:v('nacimiento'),telefono:tel,
+      correo:v('correo').toLowerCase(),direccion:v('direccion'),alergias:v('alergias'),servicio:srv,
       fecha:v('fecha')||null,horario:v('horario')||null,mensaje:v('mensaje')||null,
       estado:'pendiente',creado:new Date().toLocaleString('es-SV'),ts:ahora});
     try{ localStorage.setItem(KEY,JSON.stringify(lista)); return {id:id,guardada:true}; }
-    catch(e){ return {id:id,guardada:false}; }   /* almacenamiento bloqueado: igual se envía */
+    catch(e){ return {id:id,guardada:false}; }
   }
 
   /* ---------- Envío: valida → guarda → abre WhatsApp/correo ---------- */
   function enviar(canal){
     if(f.elements.web&&f.elements.web.value) return;          /* antispam */
     var e=validar(); pintar(e); if(Object.keys(e).length){ aviso('Revisa los campos marcados en rojo.',true); return; }
-    var r=guardarCita(), texto=textoLocal(r.id);
-    var nota=(r.guardada?'Solicitud guardada.':'')+' Tu folio es #'+String(r.id).padStart(4,'0')+'.';
+    var r=guardarCita(), t=texto(r.id), folio='#'+String(r.id).padStart(4,'0');
+    var nota=(r.guardada?'Solicitud guardada. ':'')+'Tu folio es '+folio+'.';
     if(canal==='wa'){
-      abrirWA('https://wa.me/'+WA+'?text='+encodeURIComponent(texto));
+      abrirWA('https://wa.me/'+WA+'?text='+encodeURIComponent(t));
       if(!msg.querySelector('a')) aviso(nota+' Se abrió WhatsApp con tu mensaje. Solo falta que lo envíes.');
     }else{
       aviso(nota+' Se abrió tu correo con el mensaje. Solo falta que lo envíes.');
-      window.location.href='mailto:'+MAIL+'?subject='+encodeURIComponent('Solicitud de cita #'+String(r.id).padStart(4,'0'))+'&body='+encodeURIComponent(texto);
+      window.location.href='mailto:'+MAIL+'?subject='+encodeURIComponent('Solicitud de cita '+folio)+'&body='+encodeURIComponent(t);
     }
     f.reset(); cnt.textContent='0/300';
   }
