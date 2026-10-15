@@ -320,11 +320,11 @@
     else if(nv>hoyISO) e.nacimiento='La fecha de nacimiento no puede ser futura.';
     else if(nv<'1900-01-01') e.nacimiento='Revisa la fecha de nacimiento.';
 
-    var crudo=v('telefono'), d=crudo.replace(/\D/g,'');
-    if(d.length===11&&d.indexOf('503')===0) d=d.slice(3);
+    var crudo=v('telefono'), d=crudo.replace(/\D/g,''), intl=/^\+/.test(crudo);
     if(!crudo) e.telefono='Escribe tu número de teléfono.';
-    else if(/[^\d\s\-+()]/.test(crudo)) e.telefono='El teléfono solo puede llevar números.';
-    else if(d.length!==8||'267'.indexOf(d[0])<0) e.telefono='Escribe un teléfono de 8 dígitos, por ejemplo 7647-9750.';
+    else if(/[^\d\s\-+()]/.test(crudo)||crudo.lastIndexOf('+')>0) e.telefono='El teléfono solo puede llevar números (y un + al inicio).';
+    else if(d.length<8||d.length>15) e.telefono='El teléfono debe tener entre 8 y 15 dígitos.';
+    else if(!intl&&d.length!==8&&!(d.length===11&&d.indexOf('503')===0)) e.telefono='Si es de otro país, escríbelo con + y el código, por ejemplo +52 55 1234 5678.';
     else if(/^(\d)\1+$/.test(d)) e.telefono='Revisa el número, parece incorrecto.';
 
     var c=v('correo');
@@ -377,6 +377,7 @@
   });
   /* el teléfono se ordena al salir del campo: 7647-9750 */
   f.elements.telefono.addEventListener('blur',function(){
+    if(/^\s*\+(?!503)/.test(this.value)) return;   /* otro país: se deja como se escribió */
     var d=this.value.replace(/\D/g,''); if(d.length===11&&d.indexOf('503')===0) d=d.slice(3);
     if(d.length===8) this.value=d.slice(0,4)+'-'+d.slice(4);
   });
